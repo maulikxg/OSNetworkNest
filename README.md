@@ -39,3 +39,16 @@ The operating system is system software that manages hardware resources like RAM
 ## What is Kernel?
 - The kernel acts as a bridge between hardware resources and software.
 - It manages the communication of system resources with software applications.
+
+  ## Kernel Types
+
+| Kernel Type       | Description | Working | Key Characteristics | Example |
+|------------------|-------------|---------|----------------------|---------|
+| **Simple Kernel** | A basic, minimalistic kernel for small systems or embedded environments. | Directly interacts with hardware and handles only essential tasks. No multitasking or advanced features. | Minimal functionality, direct hardware access, limited scope. | Embedded systems |
+| **Monolithic Kernel** | A large kernel where all system services are bundled together. | All services (process management, memory, device drivers, etc.) run in kernel space, giving fast communication. | All services in kernel space, high performance, tightly coupled. | Linux, Unix |
+| **Micro-Kernel** | A minimal kernel that handles only essential tasks, with other services in user space. | The kernel provides core functionalities like scheduling, and other services run as separate processes in user space. | Small kernel, modular, slower communication between kernel and user space. | Minix, QNX |
+| **Hybrid-Kernel** | Combines elements of both microkernel and monolithic kernel architectures. | Some services run in kernel space for performance, while others run in user space for modularity. | Combination of microkernel features, some services in kernel space. | Windows NT, macOS |
+| **Exo-Kernel** | A minimal kernel that provides basic hardware abstraction, leaving resource management to applications. | Exposes low-level hardware resources to applications, which manage them directly. | Minimal hardware abstraction, high flexibility, apps manage resources. | Aegis (research) |
+| **Layered Kernel** | A kernel organized into distinct layers, with each responsible for specific functions. | Each layer interacts only with the layer directly above or below it, providing separation of concerns. | Structured into layers, modular, clear separation of concerns. | OSI model (networking) |
+| **Modular Kernel** | A kernel with independent modules that can be loaded and unloaded as needed. | Allows dynamic loading and unloading of components, like drivers, while the system is running. | Flexible, modular, dynamic loading of components, less tightly coupled. | Linux (with modules) |
+
