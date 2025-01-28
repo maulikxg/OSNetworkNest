@@ -52,3 +52,107 @@ The operating system is system software that manages hardware resources like RAM
 | **Layered Kernel** | A kernel organized into distinct layers, with each responsible for specific functions. | Each layer interacts only with the layer directly above or below it, providing separation of concerns. | Structured into layers, modular, clear separation of concerns. | OSI model (networking) |
 | **Modular Kernel** | A kernel with independent modules that can be loaded and unloaded as needed. | Allows dynamic loading and unloading of components, like drivers, while the system is running. | Flexible, modular, dynamic loading of components, less tightly coupled. | Linux (with modules) |
 
+---
+# Linux Networking Commands
+
+## 1. `ifconfig` (Interface Configuration)
+**Purpose:** Displays or configures a network interface.
+
+**Example:**
+```bash
+ifconfig eth0  # Show configuration of eth0
+```
+
+---
+
+## 2. `ip` (Show IP Address)
+**Purpose:** Displays IP addresses assigned to network interfaces.
+
+**Example:**
+```bash
+ip a  # Show all network interfaces and their IP addresses
+```
+
+---
+
+## 3. `ping` (Check Connectivity)
+**Purpose:** Checks connectivity with a remote host.
+
+**Example:**
+```bash
+ping google.com  # Ping Google to check connectivity
+```
+
+---
+
+## 4. `traceroute` (Trace Route)
+**Purpose:** Displays the path packets take to a destination.
+
+**Example:**
+```bash
+traceroute google.com  # Trace the route to Google
+```
+
+---
+
+## 5. `netstat` (Network Statistics)
+**Purpose:** Shows network connections, routing tables, and interface statistics.
+
+**Example:**
+```bash
+netstat -tulnp  # Show all listening ports and active connections
+```
+
+---
+
+## 6. `ss` (Socket Statistics)
+**Purpose:** A faster and more informative alternative to `netstat`.
+
+**Example:**
+```bash
+ss -tulnp  # Show active sockets
+```
+
+---
+
+## 7. `nslookup` (DNS Query)
+**Purpose:** Queries DNS for domain name resolution.
+
+**Example:**
+```bash
+nslookup google.com  # Get DNS details for Google
+```
+
+---
+
+## 8. `dig` (DNS Lookup)
+**Purpose:** A detailed DNS query tool.
+
+**Example:**
+```bash
+dig google.com  # Get detailed DNS information for Google
+```
+
+---
+
+## 9. `route` (Routing Table)
+**Purpose:** Displays or modifies the routing table.
+
+**Example:**
+```bash
+route -n  # Show routing table
+route add default gw 192.168.1.1  # Add default gateway
+```
+
+---
+
+## 10. `arp` (Address Resolution Protocol)
+**Purpose:** Shows the ARP table with known IP-MAC mappings.
+
+**Example:**
+```bash
+arp -a  # Show all ARP entries
+```
+
+---
+
