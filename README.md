@@ -1,21 +1,41 @@
-# Basics of Operating System
+# Basics of Operating System - Linux Commands
 
-## What is an Operating System (OS)?
-An **Operating System (OS)** is system software that manages both hardware and software resources effectively.
+## Overview
+The operating system is system software that manages hardware resources like RAM, memory, CPU, and software resources like processes, threads, system libraries, networking protocols, and user management. It provides a platform on top of which other programs (applications) can run.
 
-### Hardware Resources Managed by OS:
-- **RAM (Random Access Memory):** Allocates and manages memory for running processes.
-- **Memory Management:** Handles memory allocation and swapping.
-- **CPU (Central Processing Unit):** Schedules tasks for efficient processing.
+---
 
-### Software Resources Managed by OS:
-- **Processes:** Manages process lifecycle (creation, execution, termination).
-- **Threads:** Provides multi-threading capabilities.
-- **System Libraries:** Facilitates communication between hardware and software.
-- **Networking Protocols:** Ensures proper data communication between devices.
-- **User Management:** Handles user authentication and access control.
+## Types of Operating Systems
 
-## Purpose of an OS:
-An operating system provides a **platform** for applications to run efficiently and interact with the hardware.
+### 1. **Batch Operating System**
+   - Operator takes similar jobs having the same requirements and groups them into batches.
 
-> Without an OS, the hardware and software of a computer would not function cohesively.
+### 2. **Multiprogramming**
+   - More than one program is present in the main memory, and any one of them can be kept in execution.
+
+### 3. **Time Sharing**
+   - A type of multiprogramming system where every process runs in a round-robin manner. Each task is given some time to execute so that all the tasks work smoothly.
+
+### 4. **Multi-tasking**
+   - Time-sharing and multiprogramming systems are also called multitasking, as multiple tasks run in an interleaving manner.
+
+### 5. **Multi-processing**
+   - More than one CPU is used for the execution of resources.
+
+### 6. **Multi-user**
+   - These systems allow multiple users to be active at the same time. These systems can be either multiprocessor or single processor with interleaving.
+
+### 7. **Distributed**
+   - Interconnected computers communicate with each other using a shared communication network. Independent systems possess their own memory unit and CPU.
+
+### 8. **Network**
+   - These systems run on a server and provide the capability to manage data, users, groups, security, applications, and other networking functions.
+
+### 9. **Real-time**
+   - Real-time systems are used when there are very strict time requirements, such as missile systems, air traffic control systems, robots, etc.
+
+---
+
+## What is Kernel?
+- The kernel acts as a bridge between hardware resources and software.
+- It manages the communication of system resources with software applications.
