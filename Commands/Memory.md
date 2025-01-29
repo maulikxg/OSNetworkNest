@@ -170,14 +170,6 @@ r  b   swpd  free  buff  cache  si  so  bi  bo  in  cs us sy id wa st
    - `id` (idle time) is around 70%, showing the CPU is not overly busy.
    - `wa` (waiting for I/O) is low, meaning the CPU isn't waiting much for I/O operations.
 
-## Interpreting the Data:
-- **CPU load**: If the `us` and `sy` columns are high, your system is busy running user or system processes. If `id` is high, the CPU is mostly idle.
-- **Memory usage**: If `free` memory is low, or `swpd` is high, your system may be running out of RAM and starting to swap, which can slow down the performance.
-- **I/O activity**: High `bi` (blocks in) and `bo` (blocks out) may indicate heavy disk usage, which can affect performance if the system relies heavily on disk operations.
-
-## Key Considerations:
-- If you’re seeing high swap usage (`si` and `so` values), it could indicate that your system doesn't have enough physical memory.
-- High `r` (ready to run) process counts indicate that there are many processes waiting for CPU time, which might indicate CPU saturation.
 
 ## 3. `dstat` - System Resource Monitoring in Real Time
 
