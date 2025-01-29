@@ -171,16 +171,6 @@ r  b   swpd  free  buff  cache  si  so  bi  bo  in  cs us sy id wa st
    - `wa` (waiting for I/O) is low, meaning the CPU isn't waiting much for I/O operations.
 
 
-## 3. `dstat` - System Resource Monitoring in Real Time
-
-The `dstat` command in Linux is a versatile tool that provides detailed and real-time statistics about various system resources, such as CPU usage, memory, disk I/O, network traffic, and more. It's an excellent tool for performance monitoring and debugging system bottlenecks.
-
-
-
-
-
-
-
 ## 3. `dstat` - Versatile Resource Statistics
 
 The `dstat` command is a powerful tool for monitoring various system resources in real-time. It provides an in-depth overview of various metrics such as CPU, memory, disk, network, and I/O usage. `dstat` is a more flexible alternative to commands like `vmstat` and `iostat`.
