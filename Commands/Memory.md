@@ -170,6 +170,80 @@ r  b   swpd  free  buff  cache  si  so  bi  bo  in  cs us sy id wa st
    - `id` (idle time) is around 70%, showing the CPU is not overly busy.
    - `wa` (waiting for I/O) is low, meaning the CPU isn't waiting much for I/O operations.
 
+# **📊 Critical Values for `vmstat` Output**
+
+## **🚨 Critical Thresholds in `vmstat`**
+
+| **Category**       | **Column**         | **Normal Range**       | **Critical Value (Dangerous)**  | **Why It’s Dangerous?**                           |
+|-------------------|------------------|----------------------|--------------------------------|---------------------------------|
+| **👨‍💻 CPU Load**  | `r` (Runnable processes) | `≤ Number of CPU Cores` | `> CPU Cores (Consistently)`   | Indicates **CPU bottleneck**, system lagging.    |
+| **🛑 Blocked Processes** | `b` (Blocked) | `0` or `1` | `> 2 for long time` | Processes stuck waiting for disk or network. |
+| **📦 Swap Usage** | `swpd` (Swap Used) | `0` (Best) | `> 500MB` (High Load) | RAM is full, performance slows down drastically. |
+| **📥 Swap In** | `si` (Swap In) | `0` | `> 100 KB/s consistently` | System constantly moving data from disk swap to RAM (slow). |
+| **📤 Swap Out** | `so` (Swap Out) | `0` | `> 100 KB/s consistently` | System is **running out of memory** and aggressively swapping. |
+| **📄 Disk Read** | `bi` (Block In) | `< 100` (Idle) | `> 1000 KB/s` | High disk read means **I/O bottleneck** (slow HDD/SSD). |
+| **📝 Disk Write** | `bo` (Block Out) | `< 100` (Idle) | `> 1000 KB/s` | Heavy write load can slow down system performance. |
+| **🔄 Context Switching** | `cs` (Context Switches) | `< 5000/s` | `> 10,000/s consistently` | Too many context switches cause CPU inefficiency. |
+| **⏳ Interrupts** | `in` (Interrupts) | `< 1000/s` | `> 5000/s` | High interrupts mean **hardware overload** (e.g., network, storage). |
+| **🔥 User CPU%** | `us` (User CPU) | `< 30%` | `> 80% consistently` | CPU is overloaded by **user processes**. |
+| **⚙️ System CPU%** | `sy` (System CPU) | `< 20%` | `> 50% consistently` | Kernel is overloaded, causing slowdowns. |
+| **💤 Idle CPU%** | `id` (Idle CPU) | `> 50%` (Idle is good) | `< 5% consistently` | CPU is completely maxed out. |
+| **⌛ I/O Wait%** | `wa` (I/O Wait) | `0-5%` | `> 10% consistently` | CPU is waiting too long for disk I/O. |
+
+---
+
+## **🔥 Examples of Dangerous Situations**
+
+### **1️⃣ CPU Bottleneck (Too Many Running Processes)**
+```bash
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 8  0      0  10240  844080 6145428    0    0     6   112  5000 12000 90  5  3  2  0
+```
+- **`r = 8`** (If you have 4 cores, this is a problem).  
+- **`us = 90%`** → CPU is overloaded by processes.  
+- **Fix**: Check CPU usage with `top` or `htop`. Kill high CPU processes.
+
+---
+
+### **2️⃣ Swap Thrashing (System Running Out of RAM)**
+```bash
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 2  1  1024000  5000  844080  102400    1000    800     6   112  2000 3000 10  5  5  75  0
+```
+- **`swpd = 1GB`** (Too much swap usage).  
+- **`si = 1000 KB/s`, `so = 800 KB/s`** → System is thrashing (constant RAM-disk swapping).  
+- **Fix**: Add RAM, reduce background apps.
+
+---
+
+### **3️⃣ I/O Bottleneck (Slow Disk or SSD)**
+```bash
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 1  5  0  204800  10240  1000000  0  0  5000  6000  1500  3000  10  5  10  75  0
+```
+- **`b = 5`** (Many blocked processes, waiting for disk).  
+- **`bi = 5000 KB/s, bo = 6000 KB/s`** (Disk is overloaded).  
+- **Fix**: Check disk health with `iotop`, `df -h`, or `smartctl`.
+
+---
+
+## **🚀 Conclusion**
+- **CPU (`r`, `us`, `sy`, `id`)** → **If `r > cores` or `us + sy > 90%`, CPU is overloaded**.  
+- **Memory (`swpd`, `si`, `so`)** → **If `si` or `so` > 100 KB/s, RAM is full & swapping too much**.  
+- **Disk (`bi`, `bo`)** → **If `bi` or `bo` > 1000 KB/s, disk is too busy**.  
+- **Blocked Processes (`b`)** → **If `b > 2` for a long time, there are disk/network issues**.  
+
+📌 **Action Plan:**  
+- **High CPU?** → `htop` → Kill/optimize CPU-heavy processes.  
+- **High Swap?** → `free -h` → Add RAM or reduce usage.  
+- **High I/O?** → `iotop` → Find disk-hogging processes.  
+
+---
+
+
 
 ## 3. `dstat` - Versatile Resource Statistics
 
