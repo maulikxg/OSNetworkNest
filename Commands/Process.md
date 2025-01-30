@@ -158,38 +158,128 @@ root           3       2       3  0    1 Jan22 ?        00:00:00 [rcu_gp]
 - Use **`ps -eLf`** for detailed thread-level information and debugging multithreaded applications.
 - Combine options like `-a`, `-u`, and `-x` to filter processes based on specific criteria.
 
+---
 # 2. `top` (Table of Processes)
-The `top` command provides a real-time, dynamic view of system processes.
 
-### Usage:
+## Overview
+`top` is a real-time process monitoring tool that provides a dynamic view of system performance and running processes. It's essential for system administrators and developers for live system analysis and troubleshooting.
+
+## Basic Syntax
 ```bash
-top
+top [options]
 ```
 
-### Output:
-- Displays a summary of system resource usage (CPU, memory, etc.) at the top.
-- Lists processes in order of CPU usage by default.
+## Common Command Options
+| Option | Description | Use Case |
+|--------|-------------|----------|
+| `-d N` | Set update interval to N seconds | When you need custom refresh rates |
+| `-u username` | Show only user's processes | For user-specific monitoring |
+| `-p PID` | Monitor specific process(es) | When tracking particular applications |
+| `-b` | Batch mode output | For logging and scripting |
+| `-n N` | Number of iterations | For limited duration monitoring |
+| `-H` | Show individual threads | For thread-level analysis |
 
-### Key Information:
-- `PID`: Process ID.
-- `USER`: Owner of the process.
-- `PR`: Priority of the process.
-- `NI`: Nice value (affects process priority).
-- `VIRT`: Virtual memory used by the process.
-- `RES`: Resident memory (physical memory used).
-- `SHR`: Shared memory.
-- `S`: Process status (e.g., `R` for running, `S` for sleeping).
-- `%CPU`: Percentage of CPU used.
-- `%MEM`: Percentage of memory used.
-- `TIME+`: Total CPU time used.
+## Critical Metrics Reference Table
 
-### Interactive Commands (while `top` is running):
-- `k`: Kill a process (prompts for PID).
-- `q`: Quit `top`.
-- `M`: Sort by memory usage.
-- `P`: Sort by CPU usage.
+### System Load Thresholds
+| Metric | Warning Level | Critical Level | Emergency Level |
+|--------|---------------|----------------|-----------------|
+| Load Average (per core) | > 1.0 | > 2.0 | > 5.0 |
+| CPU Usage | > 70% | > 85% | > 95% |
+| Memory Usage | > 70% | > 85% | > 95% |
+| Swap Usage | > 20% | > 50% | > 80% |
+| CPU Wait (wa) | > 10% | > 20% | > 30% |
+| Zombie Processes | ≥ 1 | ≥ 5 | ≥ 10 |
 
----
+### Process State Indicators
+| State | Symbol | Description | Action Needed If High |
+|-------|--------|-------------|----------------------|
+| Running | R | Actively using CPU | If too many, investigate CPU contention |
+| Sleeping | S | Waiting for event | Normal state for most processes |
+| Interruptible Sleep | D | Uninterruptible sleep | If persistent, check I/O issues |
+| Zombie | Z | Terminated but not reaped | Parent process investigation needed |
+| Stopped | T | Process suspended | Check if intentional |
+
+## Header Section Breakdown
+
+### First Line
+```
+top - 14:28:00 up 1:15, 2 users, load average: 0.52, 0.58, 0.59
+```
+- Time: Current system time
+- Uptime: System running duration
+- Users: Number of users logged in
+- Load Average: 1, 5, and 15-minute averages
+
+### Tasks Section
+```
+Tasks: 180 total, 1 running, 179 sleeping, 0 stopped, 0 zombie
+```
+#### Critical Values:
+- Running: Should typically be < number of CPU cores
+- Zombie: Should be 0
+- Stopped: Unusual if not debugging
+
+### Memory Section
+```
+MiB Mem : 16384.0 total, 8192.0 free, 6144.0 used, 2048.0 buff/cache
+MiB Swap: 4096.0 total, 4096.0 free, 0.0 used
+```
+#### Critical Values:
+- Free Memory: Should be > 10% of total
+- Swap Used: Should be < 20% of total
+- Buff/Cache: Large values are good
+
+### CPU States
+```
+%Cpu(s): 5.0 us, 2.0 sy, 0.0 ni, 92.0 id, 1.0 wa
+```
+| State | Description | Warning Threshold |
+|-------|-------------|------------------|
+| us (user) | User process time | > 70% sustained |
+| sy (system) | Kernel time | > 30% sustained |
+| ni (nice) | Nice'd process time | Context dependent |
+| id (idle) | Idle time | < 20% sustained |
+| wa (wait) | I/O wait time | > 10% sustained |
+
+## Interactive Commands
+
+### Process Control
+| Key | Action | Use Case |
+|-----|--------|----------|
+| k | Kill process | Terminate misbehaving process |
+| r | Renice process | Adjust process priority |
+| s | Change update interval | Customize refresh rate |
+| f | Select fields | Customize display columns |
+| 1 | Toggle CPU cores view | Monitor individual core usage |
+
+### Display Control
+| Key | Action | Use Case |
+|-----|--------|----------|
+| h/? | Show help | Learn available commands |
+| c | Toggle command line/name | See full command paths |
+| V | Forest view | View process hierarchy |
+| z | Color/mono | Toggle color support |
+
+## Process List Columns
+
+### Essential Fields
+| Column | Description | Critical Values |
+|--------|-------------|----------------|
+| PID | Process ID | System: 1-1000 |
+| USER | Process owner | Root processes should be minimal |
+| PR | Priority | -20 to 19 (lower = higher priority) |
+| NI | Nice value | -20 to 19 (lower = higher priority) |
+| VIRT | Virtual memory | Context dependent |
+| RES | Resident memory | Should not approach system RAM |
+| SHR | Shared memory | Higher values are better |
+| S | Process status | Z and D states need attention |
+| %CPU | CPU usage | > 80% needs investigation |
+| %MEM | Memory usage | > 30% needs investigation |
+| TIME+ | CPU time used | Depends on process type |
+| COMMAND | Command name | Used for process identification |
+
+----
 
 # 3. `kill` (Terminate Processes)
 The `kill` command sends a signal to a process, typically to terminate it.
