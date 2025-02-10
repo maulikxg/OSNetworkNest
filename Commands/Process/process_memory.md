@@ -242,21 +242,6 @@ total Kbytes: 1400000
 Displays the **total memory usage** of the process.
 
 ---
-
-### 🔹 3. Show Anonymous Memory (`-A`)
-```bash
-pmap -A 1234
-```
-Lists memory regions that are **not mapped to files** (e.g., stack, heap).
-
----
-
-### 🔹 4. Show Shared Memory (`-s`)
-```bash
-pmap -s 1234
-```
-Lists memory regions that are **shared** between processes.
-
 ---
 
 ## 4️⃣ Analyzing Memory Usage
